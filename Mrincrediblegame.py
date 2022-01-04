@@ -1,5 +1,5 @@
 import pygame, sys, os, random
-
+import pygame.sprite as sprite
 clock = pygame.time.Clock()
 
 from pygame.locals import *
@@ -15,6 +15,7 @@ screen = pygame.display.set_mode(WINDOW_SIZE,0,32) # initiate the window
 
 display = pygame.Surface((300,200)) # used as the surface for rendering, which is scaled
 
+        
 moving_right = False
 moving_left = False
 vertical_momentum = 0
@@ -107,7 +108,8 @@ grass_sound_timer = 0
 
 player_rect = pygame.Rect(100,100,5,22)
 
-background_objects = [[0.25,[120,10,70,400]],[0.25,[280,30,40,400]],[0.5,[30,40,40,400]],[0.5,[130,90,100,400]],[0.5,[300,80,120,400]]]
+# background image
+
 
 def collision_test(rect,tiles):
     hit_list = []
@@ -139,7 +141,8 @@ def move(rect,movement,tiles):
     return rect, collision_types
 
 while True: # game loop
-    display.fill((146,244,255)) # clear screen by filling it with blue
+    
+    display.fill((146,244,255))# clear screen by filling it with blue
 
     if grass_sound_timer > 0:
         grass_sound_timer -= 1
@@ -149,14 +152,6 @@ while True: # game loop
     scroll = true_scroll.copy()
     scroll[0] = int(scroll[0])
     scroll[1] = int(scroll[1])
-
-    pygame.draw.rect(display,(7,80,75),pygame.Rect(0,120,300,80))
-    for background_object in background_objects:
-        obj_rect = pygame.Rect(background_object[1][0]-scroll[0]*background_object[0],background_object[1][1]-scroll[1]*background_object[0],background_object[1][2],background_object[1][3])
-        if background_object[0] == 0.5:
-            pygame.draw.rect(display,(20,170,150),obj_rect)
-        else:
-            pygame.draw.rect(display,(15,76,73),obj_rect)
 
     tile_rects = []
     for y in range(3):
