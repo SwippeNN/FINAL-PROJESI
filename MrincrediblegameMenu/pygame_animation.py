@@ -95,17 +95,17 @@ class StartAnimation(pygame.sprite.Sprite):
 	
 
 
-# General setup
+
 pygame.init()
 clock = pygame.time.Clock()
 
-# Game Screen
+
 screen_width = 1900
 screen_height = 1080
 screen = pygame.display.set_mode((screen_width,screen_height))
 pygame.display.set_caption("Sprite Animation")
 
-# Creating the sprites and groups
+
 moving_sprites = pygame.sprite.Group()
 StartAnimation = StartAnimation(100,100)
 moving_sprites.add(StartAnimation)
@@ -124,7 +124,7 @@ while True:
 			
 		
 		
-	# Drawing
+	
 	screen.fill((0,0,0))
 	moving_sprites.draw(screen)
 
