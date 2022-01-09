@@ -103,7 +103,7 @@ clock = pygame.time.Clock()
 screen_width = 1900
 screen_height = 1080
 screen = pygame.display.set_mode((screen_width,screen_height))
-pygame.display.set_caption("Sprite Animation")
+pygame.display.set_caption("Game Start Animation")
 
 
 moving_sprites = pygame.sprite.Group()
