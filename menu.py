@@ -2,10 +2,6 @@ from os import stat_result
 import pygame, sys
 from pygame.font import Font
 
-pygame.init()
-m = "Menu-song.wav"
-pygame.mixer.music.load(m)
-pygame.mixer.music.play()
 
 
 class Menu():
