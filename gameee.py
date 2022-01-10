@@ -1,6 +1,9 @@
 import pygame, sys
 from menu import CreditsMenu, MainMenu, OptionsMenu, Quitmenu
-
+pygame.init()
+m = "Menu-song.wav"
+pygame.mixer.music.load(m)
+pygame.mixer.music.play()
 class Game():
     def __init__(self) :
         pygame.init()
