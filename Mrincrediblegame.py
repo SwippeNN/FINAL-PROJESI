@@ -1,4 +1,4 @@
-import pygame, sys, os, random
+import pygame, sys, os, random, noise
 import pygame.sprite as sprite
 clock = pygame.time.Clock()
 
@@ -7,15 +7,17 @@ pygame.mixer.pre_init(44100, -16, 2, 512)
 pygame.init() # initiates pygame
 pygame.mixer.set_num_channels(64)
 
+SCREEN_WIDTH = 1900
+SCREEN_HEIGHT = 1060
+
 pygame.display.set_caption('Pygame Mrincredible')
 
-WINDOW_SIZE = (1900,1060)
+WINDOW_SIZE = (SCREEN_WIDTH,SCREEN_HEIGHT)
   
-screen = pygame.display.set_mode(WINDOW_SIZE,0,32) # initiate the window
+screen = pygame.display.set_mode(WINDOW_SIZE) # initiate the window
 
 display = pygame.Surface((300,200)) # used as the surface for rendering, which is scaled
 
-        
 moving_right = False
 moving_left = False
 vertical_momentum = 0
@@ -32,11 +34,12 @@ def generate_chunk(x,y):
             target_x = x * CHUNK_SIZE + x_pos
             target_y = y * CHUNK_SIZE + y_pos
             tile_type = 0 # nothing
-            if target_y > 10:
+            height = int(noise.pnoise1(target_x * 0.1, repeat=9999999) * 5)
+            if target_y > 8 - height:
                 tile_type = 2 # dirt
-            elif target_y == 10:
+            elif target_y == 8 - height:
                 tile_type = 1 # grass
-            elif target_y == 9:
+            elif target_y == 8 - height - 1:
                 if random.randint(1,5) == 1:
                     tile_type = 3 # plant
             if tile_type != 0:
@@ -108,9 +111,6 @@ grass_sound_timer = 0
 
 player_rect = pygame.Rect(100,100,5,22)
 
-# background image
-
-
 def collision_test(rect,tiles):
     hit_list = []
     for tile in tiles:
@@ -142,7 +142,7 @@ def move(rect,movement,tiles):
 
 while True: # game loop
     
-    display.fill((146,244,255))# clear screen by filling it with blue
+    display.fill((255,200,144))# clear screen by filling it with sunset
 
     if grass_sound_timer > 0:
         grass_sound_timer -= 1
@@ -221,10 +221,9 @@ while True: # game loop
                 moving_right = False
             if event.key == K_LEFT:
                 moving_left = False
-            
-
+         
     screen.blit(pygame.transform.scale(display,WINDOW_SIZE),(0,0))
     pygame.display.update()
     clock.tick(60)
     
-   
+    
