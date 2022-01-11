@@ -1,4 +1,6 @@
 import pygame, sys, os, random, noise
+import math 
+from random import randrange
 import pygame.sprite as sprite
 clock = pygame.time.Clock()
 
@@ -16,7 +18,7 @@ WINDOW_SIZE = (SCREEN_WIDTH,SCREEN_HEIGHT)
   
 screen = pygame.display.set_mode(WINDOW_SIZE) # initiate the window
 
-display = pygame.Surface((300,200)) # used as the surface for rendering, which is scaled
+display = pygame.Surface((300,200))# used as the surface for rendering, which is scaled
 
 moving_right = False
 moving_left = False
@@ -40,12 +42,20 @@ def generate_chunk(x,y):
             elif target_y == 8 - height:
                 tile_type = 1 # grass
             elif target_y == 8 - height - 1:
-                if random.randint(1,5) == 1:
+                if random.randint(1,5) == 1:       
                     tile_type = 3 # plant
+            elif target_y == 1 - height - 1:        
+                if random.randint(1,16) == 1:
+                    tile_type = 4
+            elif target_y == 3 - height - 1:
+                if random.randint(1,16) == 1:
+                    tile_type = 5  
+            elif target_y == 0 - height - 1:
+                if random.randint(1,10) == 1:            
+                    tile_type = 6              
             if tile_type != 0:
                 chunk_data.append([[target_x,target_y],tile_type])
     return chunk_data
-
 
 global animation_frames
 animation_frames = {}
@@ -72,8 +82,7 @@ def change_action(action_var,frame,new_value):
         action_var = new_value
         frame = 0
     return action_var,frame
-        
-
+ 
 animation_database = {}
 
 animation_database['run'] = load_animation('player_animations/run',[7,7])
@@ -84,13 +93,19 @@ game_map = {}
 
 grass_img = pygame.image.load('grass.png')
 dirt_img = pygame.image.load('dirt.png')
+largetree_img = pygame.image.load('Largetree1.png')
+smalltree_img = pygame.image.load('Smalltree1.png')
+cloud_img = pygame.image.load('cloud.png')
 plant_img = pygame.image.load('plant.png').convert()
 plant_img.set_colorkey((255,255,255))
 
 tile_index = {1:grass_img,
-              2:dirt_img,
-              3:plant_img
-              }
+            2:dirt_img,
+            3:plant_img,
+            4:largetree_img,
+            5:smalltree_img,
+            6:cloud_img
+            }
 
 jump_sound = pygame.mixer.Sound('jump.wav')
 grass_sounds = [pygame.mixer.Sound('grass_0.wav'),pygame.mixer.Sound('grass_1.wav')]
@@ -141,11 +156,11 @@ def move(rect,movement,tiles):
     return rect, collision_types
 
 while True: # game loop
+        
+    display.fill((135,206,235))# clear screen by filling it with sky blue
     
-    display.fill((255,200,144))# clear screen by filling it with sunset
-
     if grass_sound_timer > 0:
-        grass_sound_timer -= 1
+           grass_sound_timer -= 1    
 
     true_scroll[0] += (player_rect.x-true_scroll[0]-152)/20
     true_scroll[1] += (player_rect.y-true_scroll[1]-106)/20
@@ -227,3 +242,6 @@ while True: # game loop
     clock.tick(60)
     
     
+
+    
+
