@@ -143,69 +143,69 @@ class OptionsMenu(Menu):
             pass
 
 
-class QuitMenu(Menu):
-    def __init__(self, game):
-        Menu.__init__(self, game)
+# class QuitMenu(Menu):
+#     def __init__(self, game):
+#         Menu.__init__(self, game)
 
-    def display_menu(self):
-        self.run_display =  True
-        while self.run_display:
-            self.game.check_events()
-            if self.game.START_KEY or self.game.BACK_KEY:
-                self.game.curr_menu = self.game.main_menu
-                self.run_display = False
-            self.game.display.fill(self.game.BLACK)
-            self.game.draw_text('Quit', 20, self.game.DISPLAY_W/2, self.game.DISPLAY_H/2 - 20)
-            self.game.draw_text('Made by BERİBOSİNALPS', 15, self.game.DISPLAY_W/2, self.game.DISPLAY_H/2 +10)
-            self.blit_screen() 
+#     def display_menu(self):
+#         self.run_display =  True
+#         while self.run_display:
+#             self.game.check_events()
+#             if self.game.START_KEY or self.game.BACK_KEY:
+#                 self.game.curr_menu = self.game.main_menu
+#                 self.run_display = False
+#             self.game.display.fill(self.game.BLACK)
+#             self.game.draw_text('Quit', 20, self.game.DISPLAY_W/2, self.game.DISPLAY_H/2 - 20)
+#             self.game.draw_text('Made by BERİBOSİNALPS', 15, self.game.DISPLAY_W/2, self.game.DISPLAY_H/2 +10)
+#             self.blit_screen() 
 
             
-    def display_menu(self):
-        self.run_display = True
-        while self.run_display:
-            self.game.check_events()
-            if self.game.START_KEY or self.game.BACK_KEY:
-                self.game.curr_menu = self.game.main_menu
-                self.run_display = False
-            self.game.display.fill(self.game.BLACK)
-            self.game.draw_text('Credits', 20, self.game.DISPLAY_W/2, self.game.DISPLAY_H/2 - 30)
-            self.game.draw_text('Made by BERİBOSİNALPS', 15, self.game.DISPLAY_W/2, self.game.DISPLAY_H/2 +10)
-            self.blit_screen()
+#     def display_menu(self):
+#         self.run_display = True
+#         while self.run_display:
+#             self.game.check_events()
+#             if self.game.START_KEY or self.game.BACK_KEY:
+#                 self.game.curr_menu = self.game.main_menu
+#                 self.run_display = False
+#             self.game.display.fill(self.game.BLACK)
+#             self.game.draw_text('Credits', 20, self.game.DISPLAY_W/2, self.game.DISPLAY_H/2 - 30)
+#             self.game.draw_text('Made by BERİBOSİNALPS', 15, self.game.DISPLAY_W/2, self.game.DISPLAY_H/2 +10)
+#             self.blit_screen()
 
 
 
 
-class volumeMenu(Menu):
-    def __init__(self, game):
-        Menu. __init__(self, game)
-        self.state = "on"
-        self.onx, self.ony = self.mid_w, self.mid_h + 20
-        self.offx, self.offy = self.mid_w, self.mid_h + 40
-        self.crusor_rect.midtop = (self.onx + self.offset, self.ony)
-    def display_menu(self):
-        self.run_display = True
-        while self.run_display:
-            self.game.check_events()
-            self.check_input()
-            self.game.display.fill(self.game.BLACK)
-            self.game.draw_text('Volume', 20, self.game.DISPLAY_W/2, self.game.DISPLAY_H/2 - 30)
-            self.game.draw_text("on", 20, self.onx, self.ony)
-            self.game.draw_text("off", 20, self.offx, self.offy)
-            self.draw_cursor()
-            self.blit_screen()
-    def check_input(self):
-        if self.game.BACK_KEY:
-            self.game.curr_menu = self.game.main_menu
-            self.run_display = False
-        elif self.game.UP_KEY or self.game.DOWN_KEY:
-            if self.state == 'on':
-                self.state = 'off'
-                self.crusor_rect.midtop = (self.offx + self.offset, self.offy)
+# class volumeMenu(Menu):
+#     def __init__(self, game):
+#         Menu. __init__(self, game)
+#         self.state = "on"
+#         self.onx, self.ony = self.mid_w, self.mid_h + 20
+#         self.offx, self.offy = self.mid_w, self.mid_h + 40
+#         self.crusor_rect.midtop = (self.onx + self.offset, self.ony)
+#     def display_menu(self):
+#         self.run_display = True
+#         while self.run_display:
+#             self.game.check_events()
+#             self.check_input()
+#             self.game.display.fill(self.game.BLACK)
+#             self.game.draw_text('Volume', 20, self.game.DISPLAY_W/2, self.game.DISPLAY_H/2 - 30)
+#             self.game.draw_text("on", 20, self.onx, self.ony)
+#             self.game.draw_text("off", 20, self.offx, self.offy)
+#             self.draw_cursor()
+#             self.blit_screen()
+#     def check_input(self):
+#         if self.game.BACK_KEY:
+#             self.game.curr_menu = self.game.main_menu
+#             self.run_display = False
+#         elif self.game.UP_KEY or self.game.DOWN_KEY:
+#             if self.state == 'on':
+#                 self.state = 'off'
+#                 self.crusor_rect.midtop = (self.offx + self.offset, self.offy)
                 
-            elif self.state == 'off':
-                self.crusor_rect.midtop = (self.onx + self.offset, self.ony)
-                self.state = 'on'
-                self.crusor_rect.midtop = (self.onx + self.offset, self.ony)
+#             elif self.state == 'off':
+#                 self.crusor_rect.midtop = (self.onx + self.offset, self.ony)
+#                 self.state = 'on'
+#                 self.crusor_rect.midtop = (self.onx + self.offset, self.ony)
 
 class Quitmenu(Menu):
     pygame.quit()
