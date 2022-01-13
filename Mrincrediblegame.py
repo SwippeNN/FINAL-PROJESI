@@ -5,12 +5,16 @@ import pygame.sprite as sprite
 clock = pygame.time.Clock()
 
 from pygame.locals import *
+
 pygame.mixer.pre_init(44100, -16, 2, 512)
+
 pygame.init() # initiates pygame
+
 pygame.mixer.set_num_channels(64)
 
-SCREEN_WIDTH = 1900
-SCREEN_HEIGHT = 1060
+SCREEN_WIDTH = 1920
+
+SCREEN_HEIGHT = 1030
 
 pygame.display.set_caption('Pygame Mrincredible')
 
@@ -43,16 +47,16 @@ def generate_chunk(x,y):
                 tile_type = 1 # grass
             elif target_y == 8 - height - 1:
                 if random.randint(1,5) == 1:       
-                    tile_type = 3 # plant
+                    tile_type = 3 # plant 
             elif target_y == 1 - height - 1:        
                 if random.randint(1,16) == 1:
                     tile_type = 4
             elif target_y == 3 - height - 1:
-                if random.randint(1,16) == 1:
-                    tile_type = 5  
+                if random.randint(1,2) == 1:
+                    tile_type = 5 
             elif target_y == 0 - height - 1:
                 if random.randint(1,10) == 1:            
-                    tile_type = 6              
+                    tile_type = 6             
             if tile_type != 0:
                 chunk_data.append([[target_x,target_y],tile_type])
     return chunk_data
@@ -126,6 +130,8 @@ grass_sound_timer = 0
 
 player_rect = pygame.Rect(100,100,5,22)
 
+background_objects = [[0.25,[120,10,70,400]],[0.25,[280,30,40,400]],[0.5,[30,40,40,400]],[0.5,[130,90,100,400]],[0.5,[300,80,120,400]]]
+
 def collision_test(rect,tiles):
     hit_list = []
     for tile in tiles:
@@ -157,7 +163,7 @@ def move(rect,movement,tiles):
 
 while True: # game loop
         
-    display.fill((135,206,235))# clear screen by filling it with sky blue
+    display.fill((135,206,235))# filling sky with sky blue  rgb color
     
     if grass_sound_timer > 0:
            grass_sound_timer -= 1    
@@ -168,6 +174,14 @@ while True: # game loop
     scroll[0] = int(scroll[0])
     scroll[1] = int(scroll[1])
 
+    pygame.draw.rect(display,(7,80,75),pygame.Rect(0,120,300,80))
+    for background_object in background_objects:
+        obj_rect = pygame.Rect(background_object[1][0]-scroll[0]*background_object[0],background_object[1][1]-scroll[1]*background_object[0],background_object[1][2],background_object[1][3])
+        if background_object[0] == 0.5:
+            pygame.draw.rect(display,(20,170,150),obj_rect)
+        else:
+            pygame.draw.rect(display,(15,76,73),obj_rect)
+    
     tile_rects = []
     for y in range(3):
         for x in range(4):
